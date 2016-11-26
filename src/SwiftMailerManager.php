@@ -2,16 +2,15 @@
 
 namespace ElfSundae\Multimail;
 
-use Illuminate\Mail\TransportManager;
 use Illuminate\Support\Manager;
 use Swift_Mailer;
 
 class SwiftMailerManager extends Manager
 {
     /**
-     * The mail transport manager.
+     * The Transport manager.
      *
-     * @var \Illuminate\Mail\TransportManager
+     * @var \ElfSundae\Multimail\TransportManager
      */
     protected $transportManager;
 
@@ -23,9 +22,9 @@ class SwiftMailerManager extends Manager
     protected $defaultDriver;
 
     /**
-     * Get the mail transport manager.
+     * Get the Transport manager.
      *
-     * @return \Illuminate\Mail\TransportManager
+     * @return \ElfSundae\Multimail\TransportManager
      */
     public function getTransportManager()
     {
@@ -33,9 +32,9 @@ class SwiftMailerManager extends Manager
     }
 
     /**
-     * Set the mail transport manager.
+     * Set the Transport manager.
      *
-     * @param  \Illuminate\Mail\TransportManager  $manager
+     * @param  \ElfSundae\Multimail\TransportManager  $manager
      * @return $this
      */
     public function setTransportManager(TransportManager $manager)
@@ -46,7 +45,7 @@ class SwiftMailerManager extends Manager
     }
 
     /**
-     * Get a swift mailer instance.
+     * Get a Swift Mailer instance.
      *
      * @param  string|null  $driver
      * @return \Swift_Mailer
@@ -57,7 +56,7 @@ class SwiftMailerManager extends Manager
     }
 
     /**
-     * Get all of the created swift mailer instances.
+     * Get all of the created Swift Mailer instances.
      *
      * @return array
      */
