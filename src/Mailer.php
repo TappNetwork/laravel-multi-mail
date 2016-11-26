@@ -30,7 +30,7 @@ class Mailer extends BaseMailer
      * @param  \ElfSundae\Multimail\SwiftMailerManager  $manager
      * @return void
      */
-    public function setSwiftMailerManager($manager)
+    public function setSwiftMailerManager(SwiftMailerManager $manager)
     {
         $this->swiftManager = $manager;
     }
