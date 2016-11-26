@@ -1,6 +1,6 @@
 <?php
 
-namespace KVZ\Laravel\SwitchableMail;
+namespace ElfSundae\Multimail;
 
 use Swift_Message;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace KVZ\Laravel\SwitchableMail;
+namespace ElfSundae\Multimail;
 
 use Illuminate\Mail\MailServiceProvider as ServiceProvider;
 
@@ -88,7 +88,7 @@ class MailServiceProvider extends ServiceProvider
     /**
      * Set a few dependencies on the mailer instance.
      *
-     * @param  \KVZ\Laravel\SwitchableMail\Mailer  $mailer
+     * @param  \ElfSundae\Multimail\Mailer  $mailer
      * @param  \Illuminate\Foundation\Application  $app
      * @return void
      */

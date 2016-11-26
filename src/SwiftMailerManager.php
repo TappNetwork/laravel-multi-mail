@@ -1,6 +1,6 @@
 <?php
 
-namespace KVZ\Laravel\SwitchableMail;
+namespace ElfSundae\Multimail;
 
 use Illuminate\Mail\TransportManager;
 use Illuminate\Support\Manager;

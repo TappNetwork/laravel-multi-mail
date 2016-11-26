@@ -1,6 +1,6 @@
 <?php
 
-namespace KVZ\Laravel\SwitchableMail;
+namespace ElfSundae\Multimail;
 
 use Illuminate\Mail\Events\MessageSending;
 use Illuminate\Mail\Mailer as BaseMailer;
@@ -10,14 +10,14 @@ class Mailer extends BaseMailer
     /**
      * The Swift Mailer Manager instance.
      *
-     * @var \KVZ\Laravel\SwitchableMail\SwiftMailerManager
+     * @var \ElfSundae\Multimail\SwiftMailerManager
      */
     protected $swiftManager;
 
     /**
      * Get the Swift Mailer Manager instance.
      *
-     * @return \KVZ\Laravel\SwitchableMail\SwiftMailerManager
+     * @return \ElfSundae\Multimail\SwiftMailerManager
      */
     public function getSwiftMailerManager()
     {
@@ -27,7 +27,7 @@ class Mailer extends BaseMailer
     /**
      * Set the Swift Mailer Manager instance.
      *
-     * @param  \KVZ\Laravel\SwitchableMail\SwiftMailerManager  $manager
+     * @param  \ElfSundae\Multimail\SwiftMailerManager  $manager
      * @return void
      */
     public function setSwiftMailerManager($manager)
