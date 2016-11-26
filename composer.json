@@ -1,30 +1,41 @@
 {
-    "name": "kevinzheng/laravel-switchable-mail",
-    "description": "For Laravel to support multiple and switchable on runtime mail drivers.",
-    "homepage": "https://github.com/kevinzheng/laravel-switchable-mail",
-    "support": {
-        "issues": "https://github.com/kevinzheng/laravel-switchable-mail/issues",
-        "source": "https://github.com/kevinzheng/laravel-switchable-mail"
-    },
-    "require": {
-        "php": ">=5.6.4",
-        "illuminate/mail": "5.3.*"
-    },
+    "name": "elfsundae/laravel-multi-mail",
+    "description": "A multi-mail implementation for Laravel 5.3",
+    "keywords": [
+        "laravel",
+        "mail",
+        "multi mail",
+        "swift mailer",
+        "swift message",
+        "transport"
+    ],
     "license": "MIT",
+    "homepage": "https://github.com/ElfSundae/laravel-multi-mail",
+    "support": {
+        "source": "https://github.com/ElfSundae/laravel-multi-mail",
+        "issues": "https://github.com/ElfSundae/laravel-multi-mail/issues"
+    },
     "authors": [
-        {
-            "name": "Kevin Zheng",
-            "email": "realkvz@gmail.com"
-        },
         {
             "name": "Elf Sundae",
             "email": "elf.sundae@gmail.com"
         }
     ],
-    "minimum-stability": "dev",
+    "require": {
+        "php": ">=5.6.4",
+        "illuminate/mail": "5.3.*"
+    },
+    "require-dev": {
+        "mockery/mockery": "~0.9.4",
+        "phpunit/phpunit": "~5.4"
+    },
     "autoload": {
         "psr-4": {
-            "KVZ\\Laravel\\SwitchableMail\\": "src/"
+            "ElfSundae\\Multimail\\": "src/Multimail/"
         }
-    }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit"
+    },
+    "minimum-stability": "dev"
 }
