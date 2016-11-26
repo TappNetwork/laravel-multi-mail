@@ -27,7 +27,7 @@ class MailServiceProvider extends ServiceProvider
      */
     protected function registerSwiftMailerManager()
     {
-        $this->app->singleton('swift.mailer.manager', function ($app) {
+        $this->app->singleton('swift.manager', function ($app) {
             return (new SwiftMailerManager($app))
                 ->setTransportManager($app['swift.transport']);
         });
@@ -82,7 +82,7 @@ class MailServiceProvider extends ServiceProvider
     {
         parent::setMailerDependencies($mailer, $app);
 
-        $mailer->setSwiftMailerManager($app['swift.mailer.manager']);
+        $mailer->setSwiftMailerManager($app['swift.manager']);
     }
 
     /**
@@ -92,6 +92,6 @@ class MailServiceProvider extends ServiceProvider
      */
     public function provides()
     {
-        return array_merge(parent::provides(), ['swift.mailer.manager']);
+        return array_merge(parent::provides(), ['swift.manager']);
     }
 }
