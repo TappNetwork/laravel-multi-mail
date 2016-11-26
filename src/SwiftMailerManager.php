@@ -66,7 +66,7 @@ class SwiftMailerManager extends Manager
     }
 
     /**
-     * Get the name of mail driver for the given swift mailer instance.
+     * Get the name of mail driver for the given Swift Mailer instance.
      *
      * @param  \Swift_Mailer  $mailer
      * @return string|null
@@ -77,7 +77,7 @@ class SwiftMailerManager extends Manager
     }
 
     /**
-     * Reset a swift mailer instance.
+     * Reset a Swift Mailer instance.
      *
      * @param  string|\Swift_Mailer  $mailer
      * @return $this
@@ -92,7 +92,7 @@ class SwiftMailerManager extends Manager
     }
 
     /**
-     * Reset all of the created swift mailer instances.
+     * Reset all of the created Swift Mailer instances.
      *
      * @return $this
      */
@@ -121,7 +121,7 @@ class SwiftMailerManager extends Manager
     }
 
     /**
-     * Create a new swift mailer instance.
+     * Create a new Swift Mailer instance.
      *
      * @param  string  $driver
      * @return \Swift_Mailer
@@ -155,7 +155,7 @@ class SwiftMailerManager extends Manager
     }
 
     /**
-     * Set the default swift mailer.
+     * Set the default Swift Mailer.
      *
      * @param  string|\Swift_Mailer  $mailer
      * @return $this
