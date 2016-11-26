@@ -93,7 +93,7 @@ class MailServiceProvider extends BaseServiceProvider
      */
     protected function registerSwiftTransport()
     {
-        $this->app['swift.transport'] = $this->app->share(function ($app) {
+        $this->app->singleton('swift.transport', function ($app) {
             return new TransportManager($app);
         });
     }
