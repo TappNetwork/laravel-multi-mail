@@ -86,6 +86,18 @@ class MailServiceProvider extends ServiceProvider
     }
 
     /**
+     * Register the Swift Transport instance.
+     *
+     * @return void
+     */
+    protected function registerSwiftTransport()
+    {
+        $this->app['swift.transport'] = $this->app->share(function ($app) {
+            return new TransportManager($app);
+        });
+    }
+
+    /**
      * Get the services provided by the provider.
      *
      * @return array
