@@ -59,7 +59,7 @@ class MailServiceProvider extends BaseServiceProvider
     /**
      * Set a few dependencies on the mailer instance.
      *
-     * @param  \Illuminate\Mail\Mailer  $mailer
+     * @param  \ElfSundae\Multimail\Mailer  $mailer
      * @param  \Illuminate\Foundation\Application  $app
      * @return void
      */
