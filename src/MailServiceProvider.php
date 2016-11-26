@@ -7,26 +7,12 @@ use Illuminate\Mail\MailServiceProvider as ServiceProvider;
 class MailServiceProvider extends ServiceProvider
 {
     /**
-     * Bootstrap the service provider.
-     *
-     * @return void
-     */
-    public function boot()
-    {
-        $this->publishes([
-            __DIR__.'/../config/switchable-mail.php' => config_path('switchable-mail.php'),
-        ], 'switchable-mail');
-    }
-
-    /**
      * Register the service provider.
      *
      * @return void
      */
     public function register()
     {
-        $this->mergeConfigFrom(__DIR__.'/../config/switchable-mail.php', 'switchable-mail');
-
         $this->registerSwiftMailer();
 
         $this->registerSwiftMailerManager();
