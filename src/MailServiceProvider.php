@@ -2,9 +2,9 @@
 
 namespace ElfSundae\Multimail;
 
-use Illuminate\Mail\MailServiceProvider as ServiceProvider;
+use Illuminate\Mail\MailServiceProvider as BaseServiceProvider;
 
-class MailServiceProvider extends ServiceProvider
+class MailServiceProvider extends BaseServiceProvider
 {
     /**
      * Register the service provider.
@@ -15,22 +15,7 @@ class MailServiceProvider extends ServiceProvider
     {
         $this->registerSwiftMailer();
 
-        $this->registerSwiftMailerManager();
-
         $this->registerMailer();
-    }
-
-    /**
-     * Register the swift mailer manager.
-     *
-     * @return void
-     */
-    protected function registerSwiftMailerManager()
-    {
-        $this->app->singleton('swift.manager', function ($app) {
-            return (new SwiftMailerManager($app))
-                ->setTransportManager($app['swift.transport']);
-        });
     }
 
     /**
@@ -74,7 +59,7 @@ class MailServiceProvider extends ServiceProvider
     /**
      * Set a few dependencies on the mailer instance.
      *
-     * @param  \ElfSundae\Multimail\Mailer  $mailer
+     * @param  \Illuminate\Mail\Mailer  $mailer
      * @param  \Illuminate\Foundation\Application  $app
      * @return void
      */
@@ -86,6 +71,22 @@ class MailServiceProvider extends ServiceProvider
     }
 
     /**
+     * Register the Swift Mailer instance.
+     *
+     * @return void
+     */
+    public function registerSwiftMailer()
+    {
+        $this->registerSwiftTransport();
+
+        $this->registerSwiftMailerManager();
+
+        $this->app->bind('swift.mailer', function ($app) {
+            return $app['swift.manager']->mailer();
+        });
+    }
+
+    /**
      * Register the Swift Transport instance.
      *
      * @return void
@@ -94,6 +95,19 @@ class MailServiceProvider extends ServiceProvider
     {
         $this->app['swift.transport'] = $this->app->share(function ($app) {
             return new TransportManager($app);
+        });
+    }
+
+    /**
+     * Register the Swift Mailer Manager instance.
+     *
+     * @return void
+     */
+    protected function registerSwiftMailerManager()
+    {
+        $this->app->singleton('swift.manager', function ($app) {
+            return (new SwiftMailerManager($app))
+                ->setTransportManager($app['swift.transport']);
         });
     }
 
