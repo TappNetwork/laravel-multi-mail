@@ -79,6 +79,7 @@ class SwiftMailerManager extends Manager
     {
         if ($driver = $this->validDriverName($mailer)) {
             unset($this->drivers[$driver]);
+            $this->transportManager->resetDriver($driver);
         }
 
         return $this;
@@ -92,6 +93,7 @@ class SwiftMailerManager extends Manager
     public function resetMailers()
     {
         $this->drivers = [];
+        $this->transportManager->resetDrivers();
 
         return $this;
     }
