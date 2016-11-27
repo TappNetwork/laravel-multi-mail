@@ -15,13 +15,6 @@ class SwiftMailerManager extends Manager
     protected $transportManager;
 
     /**
-     * The default driver.
-     *
-     * @var string
-     */
-    protected $defaultDriver;
-
-    /**
      * Get the Transport manager.
      *
      * @return \ElfSundae\Multimail\TransportManager
@@ -138,7 +131,7 @@ class SwiftMailerManager extends Manager
      */
     public function getDefaultDriver()
     {
-        return $this->defaultDriver ?: $this->transportManager->getDefaultDriver();
+        return $this->transportManager->getDefaultDriver();
     }
 
     /**
@@ -149,7 +142,7 @@ class SwiftMailerManager extends Manager
      */
     public function setDefaultDriver($driver)
     {
-        $this->defaultDriver = $driver;
+        $this->transportManager->setDefaultDriver($driver);
 
         return $this;
     }
