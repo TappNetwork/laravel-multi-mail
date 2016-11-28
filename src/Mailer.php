@@ -2,6 +2,7 @@
 
 namespace ElfSundae\Multimail;
 
+use Closure;
 use Illuminate\Contracts\Mail\Mailable as MailableContract;
 use Illuminate\Mail\Events\MessageSending;
 use Illuminate\Mail\Mailer as BaseMailer;
