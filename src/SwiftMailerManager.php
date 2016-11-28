@@ -206,8 +206,6 @@ class SwiftMailerManager extends Manager
      *
      * @param  mixed  ...$args
      * @return mixed
-     *
-     * @throws \InvalidArgumentException
      */
     protected function callDriverSelector(...$args)
     {
