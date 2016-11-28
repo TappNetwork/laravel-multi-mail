@@ -3,7 +3,7 @@
 use ElfSundae\Multimail\SwiftMessageHelper;
 use Mockery as m;
 
-class SwiftMessageHelperTest extends PHPUnit_Framework_TestCase
+class SwiftMessageHelperTest extends \PHPUnit_Framework_TestCase
 {
     protected function tearDown()
     {
