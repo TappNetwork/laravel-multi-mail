@@ -100,7 +100,6 @@ class Mailer extends BaseMailer
      * @param  string|array  $view
      * @param  array  $data
      * @param  \Closure|string  $callback
-     * @return void
      */
     public function send($view, array $data = [], $callback = null)
     {
@@ -138,7 +137,6 @@ class Mailer extends BaseMailer
      *
      * @param  \Swift_Message  $message
      * @param  \Swift_Mailer  $swift
-     * @return void
      */
     protected function sendSwiftMessage($message, Swift_Mailer $swift = null)
     {
@@ -163,7 +161,6 @@ class Mailer extends BaseMailer
      * This will prevent errors in daemon queue situations.
      *
      * @param  \Swift_Mailer  $swift
-     * @return void
      */
     protected function forceReconnection(Swift_Mailer $swift = null)
     {
@@ -187,8 +184,7 @@ class Mailer extends BaseMailer
     /**
      * Set the Swift Mailer instance.
      *
-     * @param  \Swift_Mailer  $swift
-     * @return void
+     * @param  string|\Swift_Mailer  $swift
      */
     public function setSwiftMailer($swift)
     {
