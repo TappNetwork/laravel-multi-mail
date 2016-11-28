@@ -109,6 +109,8 @@ class MailServiceProvider extends BaseServiceProvider
             return (new SwiftMailerManager($app))
                 ->setTransportManager($app['swift.transport']);
         });
+
+        $this->app->alias('swift.manager', SwiftMailerManager::class);
     }
 
     /**
