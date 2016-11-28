@@ -94,18 +94,60 @@ class Mailer extends BaseMailer
     }
 
     /**
+     * Send a new message using a view.
+     *
+     * @param  string|array  $view
+     * @param  array  $data
+     * @param  \Closure|string  $callback
+     * @return void
+     */
+    public function send($view, array $data = [], $callback = null)
+    {
+        if ($view instanceof MailableContract) {
+            return $view->send($this);
+        }
+
+        // First we need to parse the view, which could either be a string or an array
+        // containing both an HTML and plain text versions of the view which should
+        // be used when sending an e-mail. We will extract both of them out here.
+        list($view, $plain, $raw) = $this->parseView($view);
+
+        $data['message'] = $message = $this->createMessage();
+
+        // Once we have retrieved the view content for the e-mail we will set the body
+        // of this message using the HTML type, which will provide a simple wrapper
+        // to creating view based emails that are able to receive arrays of data.
+        $this->addContent($message, $view, $plain, $raw, $data);
+
+        $this->callMessageBuilder($callback, $message);
+
+        if (isset($this->to['address'])) {
+            $message->to($this->to['address'], $this->to['name'], true);
+        }
+
+        $swift = $this->getSwiftMailerForMessage($message);
+
+        $message = $message->getSwiftMessage();
+
+        $this->sendSwiftMessage($message, $swift);
+    }
+
+    /**
      * Send a Swift Message instance.
      *
      * @param  \Swift_Message  $message
+     * @param  \Swift_Mailer  $swift
      * @return void
      */
-    protected function sendSwiftMessage($message)
+    protected function sendSwiftMessage($message, Swift_Mailer $swift = null)
     {
         if ($this->events) {
             $this->events->fire(new MessageSending($message));
         }
 
-        $swift = $this->swiftManager->mailerForMessage($message);
+        if (is_null($swift)) {
+            $swift = $this->getSwiftMailer();
+        }
 
         try {
             return $swift->send($message, $this->failedRecipients);
