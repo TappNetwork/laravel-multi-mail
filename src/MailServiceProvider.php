@@ -8,8 +8,6 @@ class MailServiceProvider extends BaseServiceProvider
 {
     /**
      * Register the service provider.
-     *
-     * @return void
      */
     public function register()
     {
@@ -20,8 +18,6 @@ class MailServiceProvider extends BaseServiceProvider
 
     /**
      * Register the Mailer instance.
-     *
-     * @return void
      */
     protected function registerMailer()
     {
@@ -61,7 +57,6 @@ class MailServiceProvider extends BaseServiceProvider
      *
      * @param  \ElfSundae\Multimail\Mailer  $mailer
      * @param  \Illuminate\Foundation\Application  $app
-     * @return void
      */
     protected function setMailerDependencies($mailer, $app)
     {
@@ -72,8 +67,6 @@ class MailServiceProvider extends BaseServiceProvider
 
     /**
      * Register the Swift Mailer instance.
-     *
-     * @return void
      */
     public function registerSwiftMailer()
     {
@@ -88,8 +81,6 @@ class MailServiceProvider extends BaseServiceProvider
 
     /**
      * Register the Swift Transport instance.
-     *
-     * @return void
      */
     protected function registerSwiftTransport()
     {
@@ -100,8 +91,6 @@ class MailServiceProvider extends BaseServiceProvider
 
     /**
      * Register the Swift Mailer Manager instance.
-     *
-     * @return void
      */
     protected function registerSwiftMailerManager()
     {
