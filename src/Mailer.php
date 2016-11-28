@@ -2,8 +2,10 @@
 
 namespace ElfSundae\Multimail;
 
+use Illuminate\Contracts\Mail\Mailable as MailableContract;
 use Illuminate\Mail\Events\MessageSending;
 use Illuminate\Mail\Mailer as BaseMailer;
+use Swift_Mailer;
 
 class Mailer extends BaseMailer
 {
@@ -13,6 +15,13 @@ class Mailer extends BaseMailer
      * @var \ElfSundae\Multimail\SwiftMailerManager
      */
     protected $swiftManager;
+
+    /**
+     * The registered mail driver handler.
+     *
+     * @var \Closure|string
+     */
+    protected $mailDriverHandler;
 
     /**
      * Get the Swift Mailer Manager instance.
@@ -28,11 +37,60 @@ class Mailer extends BaseMailer
      * Set the Swift Mailer Manager instance.
      *
      * @param  \ElfSundae\Multimail\SwiftMailerManager  $manager
-     * @return void
+     * @return $this
      */
     public function setSwiftMailerManager(SwiftMailerManager $manager)
     {
         $this->swiftManager = $manager;
+
+        return $this;
+    }
+
+    /**
+     * Register the mail driver handler.
+     *
+     * @param  \Closure|string  $handler
+     * @return $this
+     */
+    public function registerMailDriverHandler($handler)
+    {
+        $this->mailDriverHandler = $handler;
+
+        return $this;
+    }
+
+    /**
+     * Call the registered mail driver handler.
+     *
+     * @param  mixed  ...$args
+     * @return mixed
+     */
+    protected function callMailDriverHandler(...$args)
+    {
+        if ($this->mailDriverHandler instanceof Closure) {
+            return call_user_func($this->mailDriverHandler, ...$args);
+        }
+
+        if (is_string($this->mailDriverHandler)) {
+            return $this->app->make($this->mailDriverHandler)->mailDriver(...$args);
+        }
+    }
+
+    /**
+     * Get a Swift Mailer instance for the given message.
+     *
+     * @param  mixed  $message
+     * @return \Swift_Mailer
+     */
+    protected function getSwiftMailerForMessage($message)
+    {
+        $swift = $this->callMailDriverHandler($message, $this);
+
+        if ($swift instanceof Swift_Mailer) {
+            return $swift;
+        }
+
+        return $this->swiftManager->mailer($swift);
     }
 
     /**
