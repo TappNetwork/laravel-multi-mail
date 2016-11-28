@@ -43,20 +43,6 @@ class SwiftMailerManagerTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf(Swift_Mailer::class, $manager->mailer('foo'));
     }
 
-    public function testDriverHandlerWithClosure()
-    {
-        $transportManager = m::mock(TransportManager::class);
-        $transportManager->shouldReceive('driver')->with('foo')->andReturn(m::mock('Swift_Transport'));
-        $manager = (new SwiftMailerManager(m::mock('Illuminate\Contracts\Foundation\Application')))->setTransportManager($transportManager);
-        $message = new Swift_Message;
-        $manager->registerDriverHandler(function ($arg) use ($message) {
-            $this->assertSame($message, $arg);
-
-            return 'foo';
-        });
-        $this->assertInstanceOf(Swift_Mailer::class, $manager->mailerForMessage($message));
-    }
-
     public function testResetMailer()
     {
         $transportManager = m::mock(TransportManager::class);
