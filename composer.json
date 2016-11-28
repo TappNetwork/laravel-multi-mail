@@ -1,6 +1,6 @@
 {
     "name": "elfsundae/laravel-multi-mail",
-    "description": "A multi-mail implementation for Laravel 5.3",
+    "description": "The missing multi-mail implementation for Laravel 5.3",
     "keywords": [
         "laravel",
         "mail",
