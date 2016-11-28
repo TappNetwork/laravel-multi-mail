@@ -17,11 +17,11 @@ class SwiftMailerManager extends Manager
     protected $transportManager;
 
     /**
-     * The registered custom driver selector.
+     * The registered driver handler.
      *
      * @var \Closure|string
      */
-    protected $driverSelector;
+    protected $driverHandler;
 
     /**
      * Get the Transport manager.
@@ -47,6 +47,17 @@ class SwiftMailerManager extends Manager
     }
 
     /**
+     * Register the driver selector.
+     *
+     * @param  \Closure|string  $handler
+     * @return $this
+     */
+    public function registerDriverHandler($handler)
+    {
+        $this->driverHandler = $handler;
+    }
+
+    /**
      * Get a Swift Mailer instance.
      *
      * @param  string|null  $driver
@@ -65,13 +76,30 @@ class SwiftMailerManager extends Manager
      */
     public function mailerForMessage(Swift_Message $message)
     {
-        $driver = $this->callDriverSelector($message, $this);
+        $driver = $this->callDriverHandler($message, $this);
 
         if ($driver instanceof Swift_Mailer) {
             return $driver;
         }
 
         return $this->mailer($driver);
+    }
+
+    /**
+     * Call the driver handler.
+     *
+     * @param  mixed  ...$args
+     * @return mixed
+     */
+    protected function callDriverHandler(...$args)
+    {
+        if ($this->driverHandler instanceof Closure) {
+            return call_user_func($this->driverHandler, ...$args);
+        }
+
+        if (is_string($this->driverHandler)) {
+            return $this->app->make($this->driverHandler)->mailDriver(...$args);
+        }
     }
 
     /**
@@ -188,33 +216,5 @@ class SwiftMailerManager extends Manager
         }
 
         return $this;
-    }
-
-    /**
-     * Register the custom driver selector.
-     *
-     * @param  \Closure|string  $selector
-     * @return $this
-     */
-    public function registerDriverSelector($selector)
-    {
-        $this->driverSelector = $selector;
-    }
-
-    /**
-     * Call the custom driver selector.
-     *
-     * @param  mixed  ...$args
-     * @return mixed
-     */
-    protected function callDriverSelector(...$args)
-    {
-        if ($this->driverSelector instanceof Closure) {
-            return call_user_func($this->driverSelector, ...$args);
-        }
-
-        if (is_string($this->driverSelector)) {
-            return $this->app->make($this->driverSelector)->mailDriver(...$args);
-        }
     }
 }
