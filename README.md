@@ -8,8 +8,6 @@
 [![Quality Score](https://img.shields.io/scrutinizer/g/ElfSundae/laravel-multi-mail.svg?style=flat-square)](https://scrutinizer-ci.com/g/ElfSundae/laravel-multi-mail)
 [![Total Downloads](https://img.shields.io/packagist/dt/ElfSundae/laravel-multi-mail.svg?style=flat-square)](https://packagist.org/packages/elfsundae/laravel-multi-mail)
 
-**:warning: Work In Progress**
-
 A multi-mail implementation for [Laravel][] 5.3.
 
 ## Installation
