@@ -47,7 +47,7 @@ class Mailer extends BaseMailer
             $this->events->fire(new MessageSending($message));
         }
 
-        $swift = $this->swiftManager->mailer(MailDriver::forMessage($message));
+        $swift = $this->swiftManager->mailerForMessage($message);
 
         try {
             return $swift->send($message, $this->failedRecipients);

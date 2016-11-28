@@ -2,8 +2,10 @@
 
 namespace ElfSundae\Multimail;
 
+use Closure;
 use Illuminate\Support\Manager;
 use Swift_Mailer;
+use Swift_Message;
 
 class SwiftMailerManager extends Manager
 {
@@ -13,6 +15,13 @@ class SwiftMailerManager extends Manager
      * @var \ElfSundae\Multimail\TransportManager
      */
     protected $transportManager;
+
+    /**
+     * The registered custom driver selector.
+     *
+     * @var \Closure|string
+     */
+    protected $driverSelector;
 
     /**
      * Get the Transport manager.
@@ -46,6 +55,23 @@ class SwiftMailerManager extends Manager
     public function mailer($driver = null)
     {
         return $this->driver($driver);
+    }
+
+    /**
+     * Get a Swift Mailer instance for the given message.
+     *
+     * @param  \Swift_Message  $message
+     * @return \Swift_Mailer
+     */
+    public function mailerForMessage(Swift_Message $message)
+    {
+        $driver = $this->callDriverSelector($message);
+
+        if ($driver instanceof Swift_Mailer) {
+            return $driver;
+        }
+
+        return $this->mailer($driver);
     }
 
     /**
@@ -162,5 +188,35 @@ class SwiftMailerManager extends Manager
         }
 
         return $this;
+    }
+
+    /**
+     * Register the custom driver selector.
+     *
+     * @param  \Closure|string  $selector
+     * @return $this
+     */
+    public function registerDriverSelector($selector)
+    {
+        $this->driverSelector = $selector;
+    }
+
+    /**
+     * Call the custom driver selector.
+     *
+     * @param  mixed  ...$args
+     * @return mixed
+     *
+     * @throws \InvalidArgumentException
+     */
+    protected function callDriverSelector(...$args)
+    {
+        if ($this->driverSelector instanceof Closure) {
+            return call_user_func($this->driverSelector, ...$args);
+        }
+
+        if (is_string($this->driverSelector)) {
+            return $this->app->make($this->driverSelector)->mailDriver(...$args);
+        }
     }
 }
