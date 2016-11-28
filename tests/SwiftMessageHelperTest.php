@@ -5,7 +5,7 @@ use Mockery as m;
 
 class SwiftMessageHelperTest extends PHPUnit_Framework_TestCase
 {
-    public function tearDown()
+    protected function tearDown()
     {
         m::close();
     }
