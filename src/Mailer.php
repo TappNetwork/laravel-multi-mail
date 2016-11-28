@@ -73,7 +73,7 @@ class Mailer extends BaseMailer
         }
 
         if (is_string($this->mailDriverHandler)) {
-            return $this->app->make($this->mailDriverHandler)->mailDriver(...$args);
+            return $this->container->make($this->mailDriverHandler)->mailDriver(...$args);
         }
     }
 
