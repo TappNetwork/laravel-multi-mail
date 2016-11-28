@@ -69,11 +69,11 @@ class Mailer extends BaseMailer
     protected function callMailDriverHandler(...$args)
     {
         if ($this->mailDriverHandler instanceof Closure) {
-            return call_user_func($this->mailDriverHandler, ...$args);
+            return $this->container->call($this->mailDriverHandler, $args);
         }
 
         if (is_string($this->mailDriverHandler)) {
-            return $this->container->make($this->mailDriverHandler)->mailDriver(...$args);
+            return $this->container->call($this->mailDriverHandler, $args, 'mailDriver');
         }
     }
 
