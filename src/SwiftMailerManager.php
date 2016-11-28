@@ -65,7 +65,7 @@ class SwiftMailerManager extends Manager
      */
     public function mailerForMessage(Swift_Message $message)
     {
-        $driver = $this->callDriverSelector($message);
+        $driver = $this->callDriverSelector($message, $this);
 
         if ($driver instanceof Swift_Mailer) {
             return $driver;
