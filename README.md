@@ -9,7 +9,9 @@
 [![Code Coverage](https://img.shields.io/scrutinizer/coverage/g/ElfSundae/laravel-multi-mail/master.svg?style=flat-square)](https://scrutinizer-ci.com/g/ElfSundae/laravel-multi-mail/?branch=master)
 [![Total Downloads](https://img.shields.io/packagist/dt/ElfSundae/laravel-multi-mail.svg?style=flat-square)](https://packagist.org/packages/elfsundae/laravel-multi-mail)
 
-The missing multi-mail implementation for [Laravel][] 5.3.
+This package provides a flexible way to assist you in extending the [Laravel][] mail service, it is the missing multi-mail implementation for Laravel 5.3.
+
+The Laravel mail service provides so many elegant ways to send emails, such as `Mailer` (the `Mail` facade), `Mailable`, `MailableMailer`, and the new [`Mail Notification`][Mail Notification]. Before getting started using this package, make sure you have read the [official mail documentation][]. This package will not change the way you are already familiar with sending emails, but help you customize the Laravel mail service, such as managing multi mail drivers at runtime, handling messages that are ultimately sent.
 
 ## Installation
 
@@ -20,6 +22,11 @@ The missing multi-mail implementation for [Laravel][] 5.3.
     ```
 
 2. **Replace** `Illuminate\Mail\MailServiceProvider::class` with `ElfSundae\Multimail\MailServiceProvider::class` in the `config/app.php` file.
+
+## Architecture
+
+- `ElfSundae\Multimail\Mailer` _extends `Illuminate\Mail\Mailer`_
+  The `Mailer` class is the facade and the maincenter of the Laravel mail system.
 
 ## Testing
 
@@ -33,3 +40,5 @@ The [MIT License](LICENSE).
 
 [Laravel]: https://laravel.com
 [Composer]: https://getcomposer.org
+[Mail Notification]: https://laravel.com/docs/5.3/notifications#mail-notifications
+[official mail documentation]: https://laravel.com/docs/mail
