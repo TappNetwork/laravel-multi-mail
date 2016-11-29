@@ -11,17 +11,6 @@
 
 The missing multi-mail implementation for [Laravel][] 5.3.
 
-# Contents
-
-<!-- MarkdownTOC -->
-
-- [Installation](#installation)
-- [Documentation](#documentation)
-- [Testing](#testing)
-- [License](#license)
-
-<!-- /MarkdownTOC -->
-
 ## Installation
 
 1. Install this package using the [Composer][] manager:
@@ -31,9 +20,6 @@ The missing multi-mail implementation for [Laravel][] 5.3.
     ```
 
 2. **Replace** `Illuminate\Mail\MailServiceProvider::class` with `ElfSundae\Multimail\MailServiceProvider::class` in the `config/app.php` file.
-
-## Documentation
-
 
 ## Testing
 
