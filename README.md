@@ -25,7 +25,7 @@ The Laravel mail service provides a number of elegant ways to send e-mails, such
 
 ## Architecture
 
-- `ElfSundae\Multimail\Mailer` _extends `Illuminate\Mail\Mailer`_
+- `ElfSundae\Multimail\Mailer` _(extends `Illuminate\Mail\Mailer`)_
 
     The `Mailer` class is the facade and the maincenter of the Laravel mail system, all sending tasks will be handled by this class. You may access it using the `Mail` facade or `app('mailer')` helper function, as well as the `Mailer` type-hint or dependency injection.
 
