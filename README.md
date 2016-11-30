@@ -31,11 +31,11 @@ The Laravel mail service provides a number of elegant ways to send e-mails, such
 
 - `ElfSundae\Multimail\SwiftMailerManager`
 
-    The `SwiftMailerManager` singleton manages all Swift Mailer instances and their corresponding Swift Transport instances for the `Mailer`, it creates, caches, resets or destroys them. A Swift Mailer instance is identified by the driver name of its transport.
+    The `SwiftMailerManager` singleton manages all Swift Mailer instances and their corresponding Swift Transport instances for the `Mailer`, it creates, caches, resets or destroys them. A Swift Mailer instance is identified by the driver name of its transport, such as `smtp`, `mailgun`, etc.
 
 - `ElfSundae\Multimail\SwiftMessageHelper`
 
-    It provides some helper methods for operating the Swift messages, such as getting domains of the e-mail addresses for the message recipients.
+    It provides some helper methods for operating the Swift messages, such as getting domains of the email addresses for the message recipients.
 
 ## Testing
 
