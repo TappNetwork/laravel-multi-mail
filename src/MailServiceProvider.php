@@ -111,6 +111,11 @@ class MailServiceProvider extends BaseServiceProvider
      */
     public function provides()
     {
-        return array_merge(parent::provides(), ['swift.manager']);
+        return array_merge(parent::provides(), [
+            'swift.manager',
+            Mailer::class,
+            SwiftMailerManager::class,
+            TransportManager::class,
+        ]);
     }
 }
