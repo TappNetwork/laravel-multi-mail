@@ -13,6 +13,21 @@ This package provides a flexible way to assist you in extending the [Laravel][] 
 
 The Laravel mail service provides a number of elegant ways to send e-mails, such as `Mailer` (the `Mail` facade), `Mailable`, `MailableMailer`, and the new [`Mail Notification`][Mail Notification]. Before getting started using this package, make sure you have read the [official mail documentation][]. This package will not change the way you are already familiar with sending e-mails, but help you customize the Laravel mail service, such as managing multi mail drivers at runtime, handling messages that are ultimately sent.
 
+<!-- MarkdownTOC -->
+
+- [Installation](#installation)
+- [Architecture](#architecture)
+- [Usage Examples](#usage-examples)
+    - [Extending Mail Drivers](#extending-mail-drivers)
+    - [Changing The Default Driver](#changing-the-default-driver)
+    - [Handling The Ultimate Driver](#handling-the-ultimate-driver)
+    - [Processing The Final Message](#processing-the-final-message)
+    - [Resetting Swift Mailers](#resetting-swift-mailers)
+- [Testing](#testing)
+- [License](#license)
+
+<!-- /MarkdownTOC -->
+
 ## Installation
 
 1. Install this package using the [Composer][] manager:
@@ -31,11 +46,35 @@ The Laravel mail service provides a number of elegant ways to send e-mails, such
 
 - `ElfSundae\Multimail\SwiftMailerManager`
 
-    The `SwiftMailerManager` singleton manages all Swift Mailer instances and their corresponding Swift Transport instances for the `Mailer`, it creates, caches, resets or destroys them. A Swift Mailer instance is identified by the driver name of its transport, such as `smtp`, `mailgun`, etc. You may access the manager via `Mail::getSwiftMailerManager()`, `app('swift.manager')`, `SwiftMailerManager` type-hint or dependency injection.
+    The `SwiftMailerManager` singleton manages all Swift Mailer instances and their corresponding Swift Transport instances for the `Mailer`, it creates, caches, resets or destroys them. A Swift Mailer instance is identified by the driver name of its transporter, such as `smtp`, `mailgun`, etc. You may access the manager via `Mail::getSwiftMailerManager()`, `app('swift.manager')`, `SwiftMailerManager` type-hint or dependency injection.
 
 - `ElfSundae\Multimail\SwiftMessageHelper`
 
     It provides some helper methods for operating the Swift messages, such as getting domains of the email addresses for the message recipients.
+
+## Usage Examples
+
+Below are several examples of usage. Remember, you can do any customization as you want.
+
+### Extending Mail Drivers
+
+_TODO_
+
+### Changing The Default Driver
+
+_TODO_
+
+### Handling The Ultimate Driver
+
+_TODO_
+
+### Processing The Final Message
+
+_TODO_
+
+### Resetting Swift Mailers
+
+_TODO_
 
 ## Testing
 
