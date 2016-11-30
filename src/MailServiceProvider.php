@@ -87,6 +87,8 @@ class MailServiceProvider extends BaseServiceProvider
         $this->app->singleton('swift.transport', function ($app) {
             return new TransportManager($app);
         });
+
+        $this->app->alias('swift.transport', TransportManager::class);
     }
 
     /**
