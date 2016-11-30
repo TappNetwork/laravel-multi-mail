@@ -11,7 +11,7 @@
 
 This package provides a flexible way to assist you in extending the [Laravel][] mail service, it is the missing multi-mail implementation for Laravel 5.3.
 
-The Laravel mail service provides a number of elegant ways to send emails, such as `Mailer` (the `Mail` facade), `Mailable`, `MailableMailer`, and the new [`Mail Notification`][Mail Notification]. Before getting started using this package, make sure you have read the [official mail documentation][]. This package will not change the way you are already familiar with sending emails, but help you customize the Laravel mail service, such as managing multi mail drivers at runtime, handling messages that are ultimately sent.
+The Laravel mail service provides a number of elegant ways to send e-mails, such as `Mailer` (the `Mail` facade), `Mailable`, `MailableMailer`, and the new [`Mail Notification`][Mail Notification]. Before getting started using this package, make sure you have read the [official mail documentation][]. This package will not change the way you are already familiar with sending e-mails, but help you customize the Laravel mail service, such as managing multi mail drivers at runtime, handling messages that are ultimately sent.
 
 ## Installation
 
@@ -26,7 +26,16 @@ The Laravel mail service provides a number of elegant ways to send emails, such 
 ## Architecture
 
 - `ElfSundae\Multimail\Mailer` _extends `Illuminate\Mail\Mailer`_
-  The `Mailer` class is the facade and the maincenter of the Laravel mail system.
+
+    The `Mailer` class is the facade and the maincenter of the Laravel mail system, all sending tasks will be handled by this class. You may access it using the `Mail` facade or `app('mailer')` helper function, as well as the `Mailer` type-hint or dependency injection.
+
+- `ElfSundae\Multimail\SwiftMailerManager`
+
+    The `SwiftMailerManager` singleton manages all Swift Mailer instances and their corresponding Swift Transport instances for the `Mailer`, it creates, caches, resets or destroys them. A Swift Mailer instance is identified by the driver name of its transport.
+
+- `ElfSundae\Multimail\SwiftMessageHelper`
+
+    It provides some helper methods for operating the Swift messages, such as getting domains of the e-mail addresses for the message recipients.
 
 ## Testing
 
