@@ -47,7 +47,7 @@ class MailerTest extends \PHPUnit_Framework_TestCase
         });
     }
 
-    public function testMailDriverHandlerIsCalled()
+    public function testSendingMessageHandlerIsCalled()
     {
         $mailer = $this->getMailer();
         $this->setView($mailer);
@@ -55,13 +55,13 @@ class MailerTest extends \PHPUnit_Framework_TestCase
         $container = m::mock('Illuminate\Contracts\Container\Container');
         $container->shouldReceive('call')->once()->andReturn('fooDriver');
         $mailer->setContainer($container);
-        $mailer->registerMailDriverHandler(function () {
+        $mailer->registerSendingMessageHandler(function () {
         });
         $mailer->send('foo', ['data'], function ($m) {
         });
     }
 
-    public function testMailDriverHandlerIsCalledWithProperParameters()
+    public function testSendingMessageHandlerIsCalledWithProperParameters()
     {
         $mailer = $this->getMockBuilder(Mailer::class)->setMethods(['createMessage'])->setConstructorArgs($this->getMocks())->getMock();
         $mailer->setSwiftMailerManager($manager = m::mock('ElfSundae\Multimail\SwiftMailerManager'));
@@ -75,7 +75,7 @@ class MailerTest extends \PHPUnit_Framework_TestCase
         $message->shouldReceive('getSwiftMessage')->once()->andReturn($message);
         $callback = function () {
         };
-        $mailer->registerMailDriverHandler($callback);
+        $mailer->registerSendingMessageHandler($callback);
         $container = m::mock('Illuminate\Contracts\Container\Container');
         $container->shouldReceive('call')->once()->with($callback, [$message, $mailer])->andReturn('fooDriver');
         $mailer->setContainer($container);

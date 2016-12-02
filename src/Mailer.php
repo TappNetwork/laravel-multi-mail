@@ -18,11 +18,11 @@ class Mailer extends BaseMailer
     protected $swiftManager;
 
     /**
-     * The registered mail driver handler.
+     * The registered handler of sending message.
      *
      * @var \Closure|string
      */
-    protected $mailDriverHandler;
+    protected $sendingMessageHandler;
 
     /**
      * Get the Swift Mailer Manager instance.
@@ -48,32 +48,32 @@ class Mailer extends BaseMailer
     }
 
     /**
-     * Register the mail driver handler.
+     * Register handler of sending message.
      *
      * @param  \Closure|string  $handler
      * @return $this
      */
-    public function registerMailDriverHandler($handler)
+    public function registerSendingMessageHandler($handler)
     {
-        $this->mailDriverHandler = $handler;
+        $this->sendingMessageHandler = $handler;
 
         return $this;
     }
 
     /**
-     * Call the registered mail driver handler.
+     * Call the registered handler of sending message.
      *
      * @param  mixed  ...$args
      * @return mixed
      */
-    protected function callMailDriverHandler(...$args)
+    protected function callSendingMessageHandler(...$args)
     {
-        if ($this->mailDriverHandler instanceof Closure) {
-            return $this->container->call($this->mailDriverHandler, $args);
+        if ($this->sendingMessageHandler instanceof Closure) {
+            return $this->container->call($this->sendingMessageHandler, $args);
         }
 
-        if (is_string($this->mailDriverHandler)) {
-            return $this->container->call($this->mailDriverHandler, $args, 'mailDriver');
+        if (is_string($this->sendingMessageHandler)) {
+            return $this->container->call($this->sendingMessageHandler, $args, 'sendingMessage');
         }
     }
 
@@ -85,7 +85,7 @@ class Mailer extends BaseMailer
      */
     protected function getSwiftMailerForMessage($message)
     {
-        $swift = $this->callMailDriverHandler($message, $this);
+        $swift = $this->callSendingMessageHandler($message, $this);
 
         if ($swift instanceof Swift_Mailer) {
             return $swift;
@@ -138,7 +138,7 @@ class Mailer extends BaseMailer
      * @param  \Swift_Message  $message
      * @param  \Swift_Mailer  $swift
      */
-    protected function sendSwiftMessage($message, Swift_Mailer $swift = null)
+    protected function sendSwiftMessage($message, $swift = null)
     {
         if ($this->events) {
             $this->events->fire(new MessageSending($message));
@@ -162,7 +162,7 @@ class Mailer extends BaseMailer
      *
      * @param  \Swift_Mailer  $swift
      */
-    protected function forceReconnection(Swift_Mailer $swift = null)
+    protected function forceReconnection($swift = null)
     {
         if (is_null($swift)) {
             $swift = $this->getSwiftMailer();
