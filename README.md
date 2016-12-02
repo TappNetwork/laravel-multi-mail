@@ -20,8 +20,8 @@ The Laravel mail service provides a number of elegant ways to send e-mails, such
 - [Usage Examples](#usage-examples)
     - [Custom Mail Drivers](#custom-mail-drivers)
     - [Changing The Default Driver](#changing-the-default-driver)
+    - [Processing The Final Messages](#processing-the-final-messages)
     - [Handling The Ultimate Driver](#handling-the-ultimate-driver)
-    - [Processing The Final Message](#processing-the-final-message)
     - [Resetting Swift Mailers](#resetting-swift-mailers)
 - [Testing](#testing)
 - [License](#license)
@@ -67,6 +67,7 @@ namespace App\Providers;
 
 use Illuminate\Mail\TransportManager;
 use Illuminate\Support\ServiceProvider;
+use App\Support\Mail\FooTransport;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -85,21 +86,66 @@ class AppServiceProvider extends ServiceProvider
 
 ### Changing The Default Driver
 
-Instead of using the mail driver that specified in the `config/mail.php` file, you may change the default driver via `Mail::mailDriver` at runtime.
+Instead of using the mail driver that specified in the `config/mail.php` file, you may change the default driver at runtime via the `mailDriver` method.
 
 ```php
 Mail::mailDriver('mailgun')->to($user)->send(new OrderShipped($order));
 ```
 
-:bulb: **Note:** Changing the mail driver by using `Mail::mailDriver` will not affect the driver of a queued sending job, it is only effectual during the current app lifetime.
+:bulb: **Note:** Changing the mail driver by using `mailDriver` will not affect the driver of a queued sending job, it is only effectual during the current app lifetime.
+
+### Processing The Final Messages
+
+This package makes it possible to process every final mail message just before sending the mail. To do so, register a global message handler via the `registerSendingMessageHandler` method.
+
+```php
+<?php
+
+namespace App\Providers;
+
+use ElfSundae\Multimail\Mailer;
+use Illuminate\Support\ServiceProvider;
+
+class AppServiceProvider extends ServiceProvider
+{
+    public function register()
+    {
+        $this->app->resolving(function (Mailer $mailer) {
+            $mailer->registerSendingMessageHandler(function ($message) {
+                $message->bcc('syslog@example.com');
+            });
+        });
+    }
+}
+```
+
+The first parameter passed to the handler is the mail message typed of `Illuminate\Mail\Message`, and you are free to type-hint additional dependencies.
+
+```php
+$mailer->registerSendingMessageHandler(
+    function (CacheRepository $cache, SwiftMailerManager $swift, $message, $mailer) {
+        $cache->increment('sending-mails-'.$swift->getDefaultDriver());
+    }
+);
+```
+
+In addition to `Closure`, the handler can also be registered with a class name:
+
+```php
+$mailer->registerSendingMessageHandler('App\Mail\Handler\SendingMessage');
+```
+
+Before sending mail messages, the `sendingMail` method of this class will be called.
+
+Of course you can specify the method name:
+
+```php
+$mailer->registerSendingMessageHandler('App\Mail\Handler\SendingMessage@sendingMailHandler');
+```
 
 ### Handling The Ultimate Driver
 
-_TODO_
-
-### Processing The Final Message
-
-_TODO_
+__TODO__
 
 ### Resetting Swift Mailers
 
