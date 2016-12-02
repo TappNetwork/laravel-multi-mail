@@ -58,7 +58,7 @@ Below are several examples of usage. Remember, you can do any customization as y
 
 ### Custom Mail Drivers
 
-Laravel ships with a handful of mail drivers, but you may want to write your own drivers to send emails via other mail services. Laravel makes it simple, by using the `extend` method of the `TransportManager` singleton, you can register a custom driver creator.
+Laravel ships with a handful of mail drivers, but you may want to write your own drivers to send emails via other mail services. Laravel makes it simple. By using the `extend` method of the `TransportManager` singleton, you can register a custom driver creator.
 
 ```php
 <?php
@@ -92,7 +92,7 @@ Instead of using the mail driver that specified in the `config/mail.php` file, y
 Mail::mailDriver('mailgun')->to($user)->send(new OrderShipped($order));
 ```
 
-:bulb: **Note:** Changing the mail driver by using `mailDriver` will not affect the driver of a queued sending job, it is only effectual during the current app lifetime.
+:bulb: **Note:** Changing the mail driver at runtime will not affect the driver of a queueing sending job, it is only effectual during the current app lifetime.
 
 ### Processing The Final Messages
 
