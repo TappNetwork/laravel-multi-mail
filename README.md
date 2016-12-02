@@ -18,7 +18,7 @@ The Laravel mail service provides a number of elegant ways to send e-mails, such
 - [Installation](#installation)
 - [Architecture](#architecture)
 - [Usage Examples](#usage-examples)
-    - [Extending Mail Drivers](#extending-mail-drivers)
+    - [Custom Mail Drivers](#custom-mail-drivers)
     - [Changing The Default Driver](#changing-the-default-driver)
     - [Handling The Ultimate Driver](#handling-the-ultimate-driver)
     - [Processing The Final Message](#processing-the-final-message)
@@ -56,9 +56,32 @@ The Laravel mail service provides a number of elegant ways to send e-mails, such
 
 Below are several examples of usage. Remember, you can do any customization as you want.
 
-### Extending Mail Drivers
+### Custom Mail Drivers
 
-_TODO_
+Laravel ships with a handful of mail drivers, but you may want to write your own drivers to send emails via other mail services. Laravel makes it simple, by using the `extend` method of the `TransportManager` singleton, you can register a custom driver creator.
+
+```php
+<?php
+
+namespace App\Providers;
+
+use Illuminate\Mail\TransportManager;
+use Illuminate\Support\ServiceProvider;
+
+class AppServiceProvider extends ServiceProvider
+{
+    public function register()
+    {
+        $this->app->resolving(function (TransportManager $manager) {
+            $manager->extend('foo', function ($app) {
+                $config = $app['config']['services.foo'];
+
+                return new FooTransport($config['key'], $config['secret']);
+            });
+        });
+    }
+}
+```
 
 ### Changing The Default Driver
 
