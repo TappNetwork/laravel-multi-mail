@@ -91,7 +91,7 @@ class Mailer extends BaseMailer
             return $swift;
         }
 
-        return $this->swiftManager->mailer($swift);
+        return $this->getSwiftMailer($swift);
     }
 
     /**
