@@ -21,7 +21,7 @@ The Laravel mail service provides a number of elegant ways to send e-mails, such
     - [Custom Mail Drivers](#custom-mail-drivers)
     - [Changing The Default Driver](#changing-the-default-driver)
     - [Processing The Final Messages](#processing-the-final-messages)
-    - [Handling The Ultimate Driver](#handling-the-ultimate-driver)
+    - [Altering Driver For Mail Message](#altering-driver-for-mail-message)
     - [Resetting Swift Mailers](#resetting-swift-mailers)
 - [License](#license)
 
@@ -140,7 +140,7 @@ Of course you can specify the method name:
 $mailer->registerSendingMessageHandler('App\Mail\Handler\SendingMessage@sendingMailHandler');
 ```
 
-### Handling The Ultimate Driver
+### Altering Driver For Mail Message
 
 The return value of the [sending message handler][] can be a mail driver name, and by this way the mail will be sent using the specified driver.
 
@@ -154,7 +154,7 @@ $mailer->registerSendingMessageHandler(function () {
 
 ### Resetting Swift Mailers
 
-Using the `resetMailer` or `resetMailers` method of the `SwiftMailerManager`, you can reset mail drivers.
+Using the `resetMailer` or `resetMailers` method of the `SwiftMailerManager`, you can reset created Swift Mailer instances.
 
 ```php
 $this->updateMailConfig();
