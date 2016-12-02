@@ -73,7 +73,7 @@ class Mailer extends BaseMailer
         }
 
         if (is_string($this->sendingMessageHandler)) {
-            return $this->container->call($this->sendingMessageHandler, $args, 'sendingMessage');
+            return $this->container->call($this->sendingMessageHandler, $args, 'sendingMail');
         }
     }
 
