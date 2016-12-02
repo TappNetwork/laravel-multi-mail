@@ -111,14 +111,14 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->resolving(function (Mailer $mailer) {
             $mailer->registerSendingMessageHandler(function ($message) {
-                $message->bcc('syslog@example.com');
+                $message->addBcc('syslog@example.com');
             });
         });
     }
 }
 ```
 
-The first parameter passed to the handler is the mail message typed of `Illuminate\Mail\Message`, and you are free to type-hint additional dependencies.
+The first parameter passed to the handler is the mail message typed of `Swift_Message`, and you are free to type-hint additional dependencies.
 
 ```php
 $mailer->registerSendingMessageHandler(

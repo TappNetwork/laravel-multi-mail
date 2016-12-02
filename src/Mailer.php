@@ -3,7 +3,6 @@
 namespace ElfSundae\Multimail;
 
 use Closure;
-use Illuminate\Contracts\Mail\Mailable as MailableContract;
 use Illuminate\Mail\Events\MessageSending;
 use Illuminate\Mail\Mailer as BaseMailer;
 use Swift_Mailer;
@@ -85,68 +84,27 @@ class Mailer extends BaseMailer
      */
     protected function getSwiftMailerForMessage($message)
     {
-        $swift = $this->callSendingMessageHandler($message, $this);
+        $driver = $this->callSendingMessageHandler($message, $this);
 
-        if ($swift instanceof Swift_Mailer) {
-            return $swift;
+        if ($driver instanceof Swift_Mailer) {
+            return $driver;
         }
 
-        return $this->getSwiftMailer($swift);
-    }
-
-    /**
-     * Send a new message using a view.
-     *
-     * @param  string|array  $view
-     * @param  array  $data
-     * @param  \Closure|string  $callback
-     */
-    public function send($view, array $data = [], $callback = null)
-    {
-        if ($view instanceof MailableContract) {
-            return $view->send($this);
-        }
-
-        // First we need to parse the view, which could either be a string or an array
-        // containing both an HTML and plain text versions of the view which should
-        // be used when sending an e-mail. We will extract both of them out here.
-        list($view, $plain, $raw) = $this->parseView($view);
-
-        $data['message'] = $message = $this->createMessage();
-
-        // Once we have retrieved the view content for the e-mail we will set the body
-        // of this message using the HTML type, which will provide a simple wrapper
-        // to creating view based emails that are able to receive arrays of data.
-        $this->addContent($message, $view, $plain, $raw, $data);
-
-        $this->callMessageBuilder($callback, $message);
-
-        if (isset($this->to['address'])) {
-            $message->to($this->to['address'], $this->to['name'], true);
-        }
-
-        $swift = $this->getSwiftMailerForMessage($message);
-
-        $message = $message->getSwiftMessage();
-
-        $this->sendSwiftMessage($message, $swift);
+        return $this->getSwiftMailer($driver);
     }
 
     /**
      * Send a Swift Message instance.
      *
      * @param  \Swift_Message  $message
-     * @param  \Swift_Mailer  $swift
      */
-    protected function sendSwiftMessage($message, $swift = null)
+    protected function sendSwiftMessage($message)
     {
         if ($this->events) {
             $this->events->fire(new MessageSending($message));
         }
 
-        if (is_null($swift)) {
-            $swift = $this->getSwiftMailer();
-        }
+        $swift = $this->getSwiftMailerForMessage($message);
 
         try {
             return $swift->send($message, $this->failedRecipients);
