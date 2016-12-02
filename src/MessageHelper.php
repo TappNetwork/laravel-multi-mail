@@ -2,9 +2,7 @@
 
 namespace ElfSundae\Multimail;
 
-use Swift_Mime_Message;
-
-class SwiftMessageHelper
+class MessageHelper
 {
     /**
      * Get all recipients for the given message, including To, Reply-To,
@@ -14,11 +12,11 @@ class SwiftMessageHelper
      * array, whereby the keys provide the actual email addresses and the values
      * provide the display names.
      *
-     * @param  \Swift_Mime_Message  $message
+     * @param  \Swift_Mime_Message|Illuminate\Mail\Message  $message
      * @param  bool  $associated
      * @return string[]
      */
-    public static function getRecipients(Swift_Mime_Message $message, $associated = false)
+    public static function getRecipients($message, $associated = false)
     {
         $recipients = array_merge(
             (array) $message->getTo(),
@@ -37,10 +35,10 @@ class SwiftMessageHelper
     /**
      * Get domains of the email addresses for the message recipients.
      *
-     * @param  \Swift_Mime_Message  $message
+     * @param  \Swift_Mime_Message|Illuminate\Mail\Message  $message
      * @return string[]
      */
-    public static function getRecipientsDomains(Swift_Mime_Message $message)
+    public static function getRecipientsDomains($message)
     {
         return array_values(array_unique(array_map(
             function ($address) {
