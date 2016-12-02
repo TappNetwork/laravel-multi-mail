@@ -151,24 +151,8 @@ class Mailer extends BaseMailer
         try {
             return $swift->send($message, $this->failedRecipients);
         } finally {
-            $this->forceReconnection($swift);
+            $swift->getTransport()->stop();
         }
-    }
-
-    /**
-     * Force the transport to re-connect.
-     *
-     * This will prevent errors in daemon queue situations.
-     *
-     * @param  \Swift_Mailer  $swift
-     */
-    protected function forceReconnection($swift = null)
-    {
-        if (is_null($swift)) {
-            $swift = $this->getSwiftMailer();
-        }
-
-        $swift->getTransport()->stop();
     }
 
     /**
