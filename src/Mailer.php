@@ -3,6 +3,7 @@
 namespace ElfSundae\Multimail;
 
 use Closure;
+use ErrorException;
 use Illuminate\Contracts\Mail\Mailable as MailableContract;
 use Illuminate\Mail\Events\MessageSending;
 use Illuminate\Mail\Mailer as BaseMailer;
@@ -43,6 +44,8 @@ class Mailer extends BaseMailer
     public function setSwiftMailerManager(SwiftMailerManager $manager)
     {
         $this->swiftManager = $manager;
+
+        unset($this->swift);
 
         return $this;
     }
@@ -192,5 +195,40 @@ class Mailer extends BaseMailer
         $this->swiftManager->setDefaultMailer($swift);
 
         return $this;
+    }
+
+    /**
+     * Dynamically retrieve property.
+     *
+     * @param  string  $key
+     * @return mixed
+     *
+     * @throws \ErrorException
+     */
+    public function __get($key)
+    {
+        if ($key == 'swift') {
+            return $this->getSwiftMailer();
+        }
+
+        throw new ErrorException('Undefined property: '.get_class().'::$'.$key);
+    }
+
+    /**
+     * Dynamically set property.
+     *
+     * @param  string  $key
+     * @param  mixed   $value
+     * @return mixed
+     *
+     * @throws \ErrorException
+     */
+    public function __set($key, $value)
+    {
+        if ($key == 'swift') {
+            return $this->setSwiftMailer($value);
+        }
+
+        throw new ErrorException('Undefined property: '.get_class().'::$'.$key);
     }
 }
