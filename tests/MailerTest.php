@@ -38,6 +38,13 @@ class MailerTest extends \PHPUnit_Framework_TestCase
         $mailer->setSwiftMailer($swift);
     }
 
+    public function testSetMailDriver()
+    {
+        $mailer = $this->getMailer();
+        $mailer->getSwiftMailerManager()->shouldReceive('setDefaultDriver')->with('foo')->once()->andReturn(null);
+        $this->assertSame($mailer, $mailer->mailDriver('foo'));
+    }
+
     public function testMailerSendSendsMessageWithProperViewContent()
     {
         $mailer = $this->getMailer();
