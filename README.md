@@ -142,7 +142,7 @@ $mailer->registerSendingMessageHandler('App\Mail\Handler\SendingMessage@sendingM
 
 ### Handling The Ultimate Driver
 
-The return value of the [sending message handler][] can be a mail driver name, and in this way the mail will be sent using the specified driver.
+The return value of the [sending message handler][] can be a mail driver name, and by this way the mail will be sent using the specified driver.
 
 ```php
 $mailer->registerSendingMessageHandler(function () {
