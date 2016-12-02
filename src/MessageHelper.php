@@ -12,7 +12,7 @@ class MessageHelper
      * array, whereby the keys provide the actual email addresses and the values
      * provide the display names.
      *
-     * @param  \Swift_Mime_Message|Illuminate\Mail\Message  $message
+     * @param  \Swift_Mime_Message|\Illuminate\Mail\Message  $message
      * @param  bool  $associated
      * @return string[]
      */
@@ -35,7 +35,7 @@ class MessageHelper
     /**
      * Get domains of the email addresses for the message recipients.
      *
-     * @param  \Swift_Mime_Message|Illuminate\Mail\Message  $message
+     * @param  \Swift_Mime_Message|\Illuminate\Mail\Message  $message
      * @return string[]
      */
     public static function getRecipientsDomains($message)
