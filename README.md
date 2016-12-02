@@ -49,7 +49,7 @@ The Laravel mail service provides a number of elegant ways to send e-mails, such
 
 - `ElfSundae\Multimail\MessageHelper`
 
-    It provides several helper methods for operating the mail messages, such as getting domains of the email addresses for the message recipients.
+    It provides several helper methods for operating the mail messages, such as getting domain names of the email addresses for the mail recipients.
 
 ## Usage Examples
 
