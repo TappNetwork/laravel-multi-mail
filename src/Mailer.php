@@ -198,6 +198,19 @@ class Mailer extends BaseMailer
     }
 
     /**
+     * Set the mail driver.
+     *
+     * @param  string  $driver
+     * @return $this
+     */
+    public function mailDriver($driver)
+    {
+        $this->swiftManager->setDefaultDriver($driver);
+
+        return $this;
+    }
+
+    /**
      * Dynamically retrieve property.
      *
      * @param  string  $key
