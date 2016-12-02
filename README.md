@@ -23,7 +23,6 @@ The Laravel mail service provides a number of elegant ways to send e-mails, such
     - [Processing The Final Messages](#processing-the-final-messages)
     - [Handling The Ultimate Driver](#handling-the-ultimate-driver)
     - [Resetting Swift Mailers](#resetting-swift-mailers)
-- [Testing](#testing)
 - [License](#license)
 
 <!-- /MarkdownTOC -->
@@ -129,13 +128,11 @@ $mailer->registerSendingMessageHandler(
 );
 ```
 
-In addition to `Closure`, the handler can also be registered with a class name:
+In addition to `Closure`, the handler can also be registered with a class name. Before sending mail, the `sendingMail` method of this class will be called.
 
 ```php
 $mailer->registerSendingMessageHandler('App\Mail\Handler\SendingMessage');
 ```
-
-Before sending mail messages, the `sendingMail` method of this class will be called.
 
 Of course you can specify the method name:
 
@@ -145,16 +142,24 @@ $mailer->registerSendingMessageHandler('App\Mail\Handler\SendingMessage@sendingM
 
 ### Handling The Ultimate Driver
 
-__TODO__
+The return value of the [sending message handler][] can be a mail driver name, and in this way the mail will be sent using the specified driver.
+
+```php
+$mailer->registerSendingMessageHandler(function () {
+    if (config('app.debug')) {
+        return 'log';
+    }
+});
+```
 
 ### Resetting Swift Mailers
 
-_TODO_
+Using the `resetMailer` or `resetMailers` method of the `SwiftMailerManager`, you can reset mail drivers.
 
-## Testing
+```php
+$this->updateMailConfig();
 
-```sh
-$ composer test
+Mail::getSwiftMailerManager()->resetMailers();
 ```
 
 ## License
@@ -165,3 +170,4 @@ The [MIT License](LICENSE).
 [Composer]: https://getcomposer.org
 [Mail Notification]: https://laravel.com/docs/5.3/notifications#mail-notifications
 [official mail documentation]: https://laravel.com/docs/mail
+[sending message handler]: #processing-the-final-messages
