@@ -185,12 +185,12 @@ class Mailer extends BaseMailer
      * Set the Swift Mailer instance.
      *
      * @param  string|\Swift_Mailer  $swift
+     * @return $this
      */
     public function setSwiftMailer($swift)
     {
         $this->swiftManager->setDefaultMailer($swift);
 
-        // Our $swift is managed by the SwiftMailerManager singleton,
-        // so just let $this->swift go.
+        return $this;
     }
 }
