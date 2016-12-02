@@ -174,11 +174,12 @@ class Mailer extends BaseMailer
     /**
      * Get the Swift Mailer instance.
      *
+     * @param  string|null  $driver
      * @return \Swift_Mailer
      */
-    public function getSwiftMailer()
+    public function getSwiftMailer($driver = null)
     {
-        return $this->swiftManager->mailer();
+        return $this->swiftManager->mailer($driver);
     }
 
     /**
