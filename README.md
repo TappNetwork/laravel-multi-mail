@@ -85,7 +85,11 @@ class AppServiceProvider extends ServiceProvider
 
 ### Changing The Default Driver
 
-_TODO_
+Instead of using the mail driver that specified in the `config/mail.php` file, you may change the default driver via `Mail::mailDriver` at runtime.
+
+```php
+Mail::mailDriver('mailgun')->to($user)->send(new OrderShipped($order));
+```
 
 ### Handling The Ultimate Driver
 
