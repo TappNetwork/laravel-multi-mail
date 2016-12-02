@@ -91,6 +91,8 @@ Instead of using the mail driver that specified in the `config/mail.php` file, y
 Mail::mailDriver('mailgun')->to($user)->send(new OrderShipped($order));
 ```
 
+:bulb: **Note:** Changing the mail driver by using `Mail::mailDriver` will not affect the driver of a queued sending job, it is only effectual during the current app lifetime.
+
 ### Handling The Ultimate Driver
 
 _TODO_
