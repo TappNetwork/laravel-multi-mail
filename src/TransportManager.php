@@ -17,7 +17,7 @@ class TransportManager extends BaseTransportManager
     }
 
     /**
-     * Reset all of the created Transport instance.
+     * Reset all of the created Transport instances.
      */
     public function resetDrivers()
     {
