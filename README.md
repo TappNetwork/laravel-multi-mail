@@ -123,7 +123,7 @@ The first parameter passed to the handler is the mail message typed of `Swift_Me
 ```php
 $mailer->registerSendingMessageHandler(
     function (CacheRepository $cache, SwiftMailerManager $swift, $message, $mailer) {
-        $cache->increment('sending-mails-'.$swift->getDefaultDriver());
+        //
     }
 );
 ```
@@ -145,9 +145,12 @@ $mailer->registerSendingMessageHandler('App\Mail\Handler\SendingMessage@sendingM
 The return value of the [sending message handler][] can be a mail driver name, and by this way the mail will be sent using the specified driver.
 
 ```php
-$mailer->registerSendingMessageHandler(function () {
-    if (config('app.debug')) {
-        return 'log';
+$mailer->registerSendingMessageHandler(function ($message) {
+    if (preg_match_all(
+        '#@(.+\.)?(qq.com|126.com|163.com|sina.com|sina.cn)$#im',
+        implode(PHP_EOL, MessageHelper::getRecipients($message))
+    )) {
+        return 'directmail';
     }
 });
 ```
